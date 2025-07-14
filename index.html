@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>ESP32 BLE LED Kontrol</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    @media (max-width: 500px) {
+      #panel {
+        padding: 12px 2vw;
+        max-width: 98vw;
+      }
+      h1 { font-size: 1.2rem; }
+      #subtitle { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <h1 data-tr="ESP32 BLE LED Kontrol" data-en="ESP32 BLE LED Control">ESP32 BLE LED Kontrol</h1>
+  <div id="panel">
+    <div id="status">
+      <span id="statusIcon" class="status-off"></span>
+      <span id="durum" data-tr="Durum: Bağlı değil" data-en="Status: Not connected">Durum: Bağlı değil</span>
+    </div>
+    <div id="bulbContainer" class="animate__animated animate__pulse">
+      <svg id="bulb" width="70" height="110" viewBox="0 0 70 110">
+        <!-- Cam -->
+        <ellipse cx="35" cy="50" rx="26" ry="38" fill="#ffe066" id="bulbGlass" style="filter: drop-shadow(0 0 24px var(--main-color));"/>
+        <!-- Parlaklık efekti -->
+        <ellipse cx="28" cy="38" rx="10" ry="18" fill="#fff" opacity="0.18"/>
+        <ellipse cx="42" cy="60" rx="6" ry="10" fill="#fff" opacity="0.10"/>
+        <!-- Tel -->
+        <path d="M30 70 Q35 80 40 70" stroke="#bfa600" stroke-width="2" fill="none"/>
+        <!-- Duy -->
+        <rect x="25" y="86" width="20" height="16" rx="5" fill="#888"/>
+        <rect x="29" y="102" width="12" height="6" rx="2" fill="#666"/>
+        <!-- Duy çizgileri -->
+        <rect x="27" y="90" width="16" height="2" rx="1" fill="#b0bec5" opacity="0.7"/>
+        <rect x="27" y="94" width="16" height="2" rx="1" fill="#b0bec5" opacity="0.5"/>
+        <!-- Alt gölge -->
+        <ellipse cx="35" cy="115" rx="22" ry="8" fill="#000" opacity="0.22" filter="blur(3px)"/>
+      </svg>
+    </div>
+    <div id="buttonGroup">
+      <button id="baglanBtn" class="animate__animated" data-tr="Cihaza Bağlan" data-en="Connect Device">Cihaza Bağlan</button>
+      <label class="switch">
+        <input type="checkbox" id="ledSwitch" disabled>
+        <span class="slider"></span>
+        <span class="switch-label" data-tr="LED" data-en="LED">LED</span>
+      </label>
+    </div>
+    <div id="messages"></div>
+    <div id="loadingSpinner" class="hidden"></div>
+  </div>
+  <button id="settingsBtn" class="settings-fab" aria-label="Ayarlar">⚙️</button>
+
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" id="closeSettingsBtn">&times;</span>
+      <h2>Ayarlar</h2>
+      <div class="setting-row">
+        <label for="autoConnectSwitch">Otomatik bağlanma</label>
+        <label class="switch">
+          <input type="checkbox" id="autoConnectSwitch">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <label for="themeColor">Tema rengi</label>
+        <select id="themeColorSettings">
+          <option value="#1976d2">Mavi</option>
+          <option value="#43a047">Yeşil</option>
+          <option value="#d32f2f">Kırmızı</option>
+          <option value="#ff9800">Turuncu</option>
+          <option value="#9c27b0">Mor</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label for="langSelect">Dil / Language</label>
+        <select id="langSelect">
+          <option value="tr">Türkçe</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <details>
+          <summary>Lisanslar</summary>
+          <small>
+            <p>
+              Bu web sayfası MIT lisansı ile sunulmaktadır.<br>
+              Creator: Aybüke Kolsuz<br>
+              <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>
+            </p>
+          </small>
+        </details>
+      </div>
+    </div>
+  </div>
+  <button id="darkModeBtn" type="button" class="dark-mode-fab" aria-label="Tema Değiştir">🌙</button>
+  <script src="app.js"></script>
+</body>
+</html>
